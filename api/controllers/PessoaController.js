@@ -1,4 +1,5 @@
 const database = require("../models");
+const Sequelize = require("sequelize");
 
 class PessoaController {
   static async pegaPessoasAtivas(req, res) {
@@ -50,9 +51,9 @@ class PessoaController {
       await database.Pessoas.update(novasInfos, { where: { id: Number(id) } });
       const pessoaAtualizada = await database.Pessoas.findOne( { where: { id: Number(id) }} ); 
 
-      res.status(200).json(pessoaAtualizada);
+      return res.status(200).json(pessoaAtualizada);
     } catch (error) {
-      res.status(500).json(error.message);
+      return res.status(500).json(error.message);
     }
   }
 
@@ -63,7 +64,7 @@ class PessoaController {
 
       return res.status(200).json({ mensagem: `ID com o número ${id} deletado` });
     } catch (error) {
-      res.status(500).json(error.message);
+      return res.status(500).json(error.message);
     }
   }
 
@@ -75,7 +76,7 @@ class PessoaController {
           id: Number(id)
         }
       });
-      res.status(200).json({ mensagem: `ID ${id} restaurado` });
+      return res.status(200).json({ mensagem: `ID ${id} restaurado` });
     } catch (error) {
       return res.status(500).json(error.message);
     }
@@ -119,9 +120,9 @@ class PessoaController {
       });
       const MatriculaAtualizada = await database.Matriculas.findOne( { where: { id: Number(matriculaId) }} ); 
 
-      res.status(200).json(MatriculaAtualizada);
+      return res.status(200).json(MatriculaAtualizada);
     } catch (error) {
-      res.status(500).json(error.message);
+      return res.status(500).json(error.message);
     }
   }
 
@@ -137,7 +138,7 @@ class PessoaController {
 
       return res.status(200).json({ mensagem: `ID com o número ${matriculaId} deletado` });
     } catch (error) {
-      res.status(500).json(error.message);
+      return res.status(500).json(error.message);
     }
   }
 
@@ -150,7 +151,62 @@ class PessoaController {
           id: Number(matriculaId)
         }
       });
-      res.status(200).json({ mensagem: `ID ${matriculaId} restaurado` });
+      return res.status(200).json({ mensagem: `ID ${matriculaId} restaurado` });
+    } catch (error) {
+      return res.status(500).json(error.message);
+    }
+  }
+
+  static async pegaMatriculas(req, res) {
+    // eslint-disable-next-line no-unused-vars
+    const { estudanteId } = req.params;
+    try {
+      const pessoa = await database.Pessoas.findOne({ 
+        where: {
+        id: Number(estudanteId) 
+      } 
+    });
+
+    const matriculas = await pessoa.getAulasMatriculadas();
+
+      return res.status(200).json(matriculas);
+    } catch (error) {
+      return res.status(500).json(error.message);
+    }
+  }
+
+  static async pegaMatriculasPorTurma(req, res) {
+    // eslint-disable-next-line no-unused-vars
+    const { turmaId } = req.params;
+    try {
+      const todasAsMatriculas = await database.Matriculas
+      .findAndCountAll({
+        where: {
+          turma_id: Number(turmaId),
+          status: "confirmado",
+        },
+        limit: 20,
+        order: [["estudante_id", "DESC"]]
+      });
+      return res.status(200).json(todasAsMatriculas);
+    } catch (error) {
+      return res.status(500).json(error.message);
+    }
+  }
+
+  static async pegaTurmasLotadas(req, res) {
+    const lotacaoTurma = 2;
+    try {
+      const turmasLotadas = await database.Matriculas
+      .findAndCountAll({
+        where: {
+          status: "confirmado"
+        },
+        attributes: ["turma_id"],
+        group: ["turma_id"],
+        having: Sequelize.literal(`count(turma_id) >= ${lotacaoTurma}`)
+      });
+      return res.status(200).json(turmasLotadas.count);
     } catch (error) {
       return res.status(500).json(error.message);
     }

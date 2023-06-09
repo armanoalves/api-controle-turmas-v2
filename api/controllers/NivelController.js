@@ -65,7 +65,7 @@ class NivelController {
           id: Number(id)
         }
       });
-      res.status(200).json({ mensagem: `ID ${id} restaurado` });
+      return res.status(200).json({ mensagem: `ID ${id} restaurado` });
     } catch (error) {
       return res.status(500).json(error.message);
     }

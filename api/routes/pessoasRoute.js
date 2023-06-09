@@ -8,10 +8,14 @@ router
   .get("/pessoas/todos", PessoaController.pegaTodasAsPessoas)
   .get("/pessoas/:id", PessoaController.pegaUmaPessoa)
   .post("/pessoas", PessoaController.criaPessoa)
+  .post("/pessoas/:id/restaura", PessoaController.restauraPessoa)
   .put("/pessoas/:id", PessoaController.atualizaPessoa)
   .delete("/pessoas/:id", PessoaController.apagaPessoa)
-  .post("/pessoas/:id/restaura", PessoaController.restauraPessoa)
+  
 
+  .get("/pessoas/:estudanteId/matricula", PessoaController.pegaMatriculas)
+  .get("/pessoas/matricula/lotada", PessoaController.pegaTurmasLotadas)
+  .get("/pessoas/matricula/:turmaId/confirmadas", PessoaController.pegaMatriculasPorTurma)
   .get("/pessoas/:estudanteId/matricula/:matriculaId", PessoaController.pegaUmaMatricula)
   .post("/pessoas/:estudanteId/matricula", PessoaController.criaMatricula)
   .post("/pessoas/:estudanteId/matricula/:matriculaId/restaura", PessoaController.restauraMatricula)
