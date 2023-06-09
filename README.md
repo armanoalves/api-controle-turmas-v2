@@ -19,6 +19,18 @@ Projeto desenvolvido com base no curso de ORM com NodeJS: API com Sequelize e My
 
 - Restaurar registros deletados via exclusão suave, utilizando o `.restore()`
 
+### Aula 02
+
+- Definir um escopo de modelo padrão (defaultScope)
+
+- Definir outros escopos adicionais, conforme necessidade do projeto
+
+- Utilizar um escopo adicional com o método .findAll()
+
+- Validar dados de entrada utilizando validadores próprios do Sequelize
+
+- Refinar e customizar validações de campos utilizando funções e JS puro
+
 ## Como executar
 
 1. Clonar o repositório
