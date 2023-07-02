@@ -61,6 +61,26 @@ Projeto desenvolvido com base no curso de ORM com NodeJS: API com Sequelize e My
 
 - Interpretar avisos de versionamento e fazer correções
 
+### Aula 05
+
+- Criar uma camada de serviços
+
+- Transferir a interface com a database do controlador para o serviço
+
+- Atualizar o código no controlador para acessar os serviços
+
+- Criar serviços específicos que herdem métodos da classe principal
+
+- Organizar os serviços criando um ponto de entrada (index.js)
+
+- Criar métodos específicos para um serviço/modelo
+
+- Passar parâmetros de controladores para serviços
+
+- Conectar serviços entre si
+
+- Refatorar a aplicação para separar controladores e serviços
+
 ## Como executar
 
 1. Clonar o repositório
