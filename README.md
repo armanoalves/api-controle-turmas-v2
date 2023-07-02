@@ -53,6 +53,14 @@ Projeto desenvolvido com base no curso de ORM com NodeJS: API com Sequelize e My
 
 - Passar comandos do SQL dentro do Sequelize com `Sequelize.literal()`
 
+### Aula 04
+
+- Criar métodos para atualizar mais de uma tabela
+
+- Adicionar transações às operações de banco via Sequelize
+
+- Interpretar avisos de versionamento e fazer correções
+
 ## Como executar
 
 1. Clonar o repositório
